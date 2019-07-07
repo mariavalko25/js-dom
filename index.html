@@ -7,29 +7,39 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="clock"></div>
-    <section>
-      <img
-        src="img/dinosaur.png"
-        alt="A red Tyrannosaurus Rex: A two legged dinosaur standing upright like a human, with small arms, and a large head with lots of sharp teeth."
-      />
-      <p>
-        Here we will add a link to the
-        <a href="https://www.mozilla.org/">Mozilla homepage</a>
-      </p>
-    </section>
-
     <div class="calculator">
-      <input type="text" class="display" readonly placeholder="0" />
+      <input type="text" class="display" placeholder="0" />
+      <div class="digits">
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+      </div>
+      <div class="digits">
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+      </div>
       <div class="digits">
         <button>1</button>
         <button>2</button>
         <button>3</button>
       </div>
-      <div class="opers">
-        <button>+</button>
-        <button>-</button>
+      <div class="digits">
+        <button>0</button>
+        <button>.</button>
+        <button class="clear">C</button>
+      </div>      
+      <div class="opers">        
+        <button class="simpleOperations">+</button>
+        <button class="simpleOperations">-</button>
+        <button class="multiple">*</button>
+        <button class="divide">/</button>
+        <button>%</button>
+        <button>&#177;</button>
+        
       </div>
+      <button class="operation-power">^2</button>
+      
       <button class="equal">=</button>
     </div>
 

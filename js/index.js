@@ -1,4 +1,4 @@
-const link = document.querySelector('a');
+/*const link = document.querySelector('a');
 link.textContent = 'Mozilla Developer Network';
 link.href = 'https://developer.mozilla.org';
 
@@ -22,7 +22,7 @@ para.style.padding = '10px';
 para.style.width = '250px';
 para.style.textAlign = 'center';
 
-para.classList.add('chosen');
+para.classList.add('chosen');*/
 
 // document.querySelector('.click-me').addEventListener('click', showAlert);
 
@@ -30,11 +30,11 @@ para.classList.add('chosen');
 //   alert('Button clicked!');
 // }
 
-const clockDisplay = document.querySelector('.clock');
+/*const clockDisplay = document.querySelector('.clock');
 setInterval(
   () => (clockDisplay.innerText = new Date().toLocaleTimeString()),
   1000
-);
+);*/
 
 const display = document.querySelector('.calculator .display');
 
@@ -50,12 +50,44 @@ document
   .querySelectorAll('.opers button')
   .forEach(oper => oper.addEventListener('click', operPressed));
 
+let signOfOperation;
 function operPressed(ev) {
+  signOfOperation = ev.target.innerText;
+  console.log(signOfOperation);
   display.value += ev.target.innerText;
+}
+
+
+document.querySelector('.clear').addEventListener('click', resetPressed);
+
+function resetPressed() {
+  display.value = '';
+}
+
+let operationPower = document.querySelector('.operation-power').innerHTML;
+//console.log(operationPower);
+
+/*function powerPressed(ev) {
+  //display.value += ev.target.InnerText;
+  console.log(display.value);
+}*/
+
+document.querySelector('.operation-power').addEventListener('click', powerPressed);
+
+function powerPressed(ev) {
+  display.value = Math.pow(display.value, 2);
+}
+
+function operationToPower() {
+  
 }
 
 document.querySelector('.equal').addEventListener('click', equalPressed);
 
 function equalPressed() {
+  let arr = display.value.split('/');
+ 
+  console.log(arr);
   display.value = eval(display.value);
+  console.log(display.value);
 }
