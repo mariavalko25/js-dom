@@ -4,7 +4,7 @@ const display = document.querySelector('.calculator .display'),
       decimalPoint = document.querySelector('.decimal-point'),
       clear = document.querySelector('.clear');
 
-let isNewValue = true,
+let isNewValue = false,
     currentValue = 0,
     signOfOperation = '';
 
@@ -48,7 +48,7 @@ function operPressed(ev) {
     } else {
       currentValue = localCurrentValue;
     }   
-     
+
     display.value = currentValue;
     signOfOperation = ev.target.innerText;
   }
