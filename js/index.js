@@ -20,16 +20,16 @@ function digitPressed(ev) {
   } else {
     if (display.value === '0') {
       display.value = ev.target.innerText;
-      console.log(1);
+      //console.log(1);
     } else {
       display.value += ev.target.innerText;
-      console.log(2);
+      //console.log(2);
     }
   }
 }
 
 function operPressed(ev) {
-  let prevValue = display.value;
+  let localCurrentValue = display.value;
 
   if (isNewValue && signOfOperation !== '=') {
     display.value = currentValue;
@@ -37,24 +37,18 @@ function operPressed(ev) {
   } else {
     isNewValue = true;
     if (signOfOperation === '+') {
-      let cutval = parseFloat(prevValue);
-      currentValue = +currentValue + +cutval;
+      currentValue = +currentValue + +(parseFloat(localCurrentValue));
     } else if (signOfOperation === '-') {
-      if (display.value === '') {
-        currentValue = signOfOperation + currentValue;
-        console.log('currentValue ' + currentValue);
-        console.log('signOfOperation' + signOfOperation);
-
-      } else {
-        currentValue -= parseFloat(prevValue);
-      }
+      currentValue -= parseFloat(localCurrentValue);
+      console.log(localCurrentValue);
     } else if (signOfOperation === '*') {
-      currentValue *= parseFloat(prevValue);
+      currentValue *= parseFloat(localCurrentValue);
     } else if (signOfOperation === '/') {
-      parseFloat(prevValue) === 0 ? currentValue = 'Помилка' : currentValue /= parseFloat(prevValue);
+      parseFloat(localCurrentValue) === 0 ? currentValue = 'Помилка' : currentValue /= parseFloat(localCurrentValue);
     } else {
-      currentValue = prevValue;
-    }    
+      currentValue = localCurrentValue;
+    }   
+     
     display.value = currentValue;
     signOfOperation = ev.target.innerText;
   }
@@ -65,7 +59,6 @@ function decimalPressed() {
   if (isNewValue) {
     localDecimalNumber = '0.';
     isNewValue = false;
-    console.log(3);
   } else {
     if(localDecimalNumber.indexOf('.') === -1) {
       localDecimalNumber += '.';
@@ -73,11 +66,11 @@ function decimalPressed() {
   }
   console.log('localDecimalNumber ' + localDecimalNumber);
   display.value = localDecimalNumber;
-  display.value.toFixed(2);
+  //(+display.value).toFixed(2);
 }
 
 function clearPressed() {
   display.value = '';
-  console.log('Натиснуто ' + display.value);
+  //console.log('Натиснуто ' + display.value);
 }
 
