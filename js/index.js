@@ -1,93 +1,83 @@
-/*const link = document.querySelector('a');
-link.textContent = 'Mozilla Developer Network';
-link.href = 'https://developer.mozilla.org';
+const display = document.querySelector('.calculator .display'),
+      numbers = document.querySelectorAll('.digits button'),
+      operations = document.querySelectorAll('.opers button'),
+      decimalPoint = document.querySelector('.decimal-point'),
+      clear = document.querySelector('.clear');
 
-const sect = document.querySelector('section');
-const para = document.createElement('p');
-para.textContent = 'We hope you enjoyed the ride.';
-sect.appendChild(para);
-const text = document.createTextNode(
-  ' — the premier source for web development knowledge.'
-);
-const linkPara = document.querySelector('p');
-linkPara.appendChild(text);
+let isNewValue = true,
+    currentValue = 0,
+    signOfOperation = '';
 
-sect.appendChild(linkPara);
-// sect.removeChild(linkPara);
-linkPara.parentNode.removeChild(linkPara);
-
-para.style.color = 'white';
-para.style.backgroundColor = 'black';
-para.style.padding = '10px';
-para.style.width = '250px';
-para.style.textAlign = 'center';
-
-para.classList.add('chosen');*/
-
-// document.querySelector('.click-me').addEventListener('click', showAlert);
-
-// function showAlert() {
-//   alert('Button clicked!');
-// }
-
-/*const clockDisplay = document.querySelector('.clock');
-setInterval(
-  () => (clockDisplay.innerText = new Date().toLocaleTimeString()),
-  1000
-);*/
-
-const display = document.querySelector('.calculator .display');
-
-document
-  .querySelectorAll('.digits button')
-  .forEach(digit => digit.addEventListener('click', digitPressed));
+numbers.forEach(digit => digit.addEventListener('click', digitPressed));
+operations.forEach(oper => oper.addEventListener('click', operPressed));
+decimalPoint.addEventListener('click', decimalPressed);
+clear.addEventListener('click', clearPressed);
 
 function digitPressed(ev) {
-  display.value += ev.target.innerText;
+  if (isNewValue) {
+    display.value = ev.target.innerText;
+    isNewValue = false;
+  } else {
+    if (display.value === '0') {
+      display.value = ev.target.innerText;
+      console.log(1);
+    } else {
+      display.value += ev.target.innerText;
+      console.log(2);
+    }
+  }
 }
 
-document
-  .querySelectorAll('.opers button')
-  .forEach(oper => oper.addEventListener('click', operPressed));
-
-let signOfOperation;
 function operPressed(ev) {
-  signOfOperation = ev.target.innerText;
-  console.log(signOfOperation);
-  display.value += ev.target.innerText;
+  let prevValue = display.value;
+
+  if (isNewValue && signOfOperation !== '=') {
+    display.value = currentValue;
+    isNewValue = false;
+  } else {
+    isNewValue = true;
+    if (signOfOperation === '+') {
+      let cutval = parseFloat(prevValue);
+      currentValue = +currentValue + +cutval;
+    } else if (signOfOperation === '-') {
+      if (display.value === '') {
+        currentValue = signOfOperation + currentValue;
+        console.log('currentValue ' + currentValue);
+        console.log('signOfOperation' + signOfOperation);
+
+      } else {
+        currentValue -= parseFloat(prevValue);
+      }
+    } else if (signOfOperation === '*') {
+      currentValue *= parseFloat(prevValue);
+    } else if (signOfOperation === '/') {
+      parseFloat(prevValue) === 0 ? currentValue = 'Помилка' : currentValue /= parseFloat(prevValue);
+    } else {
+      currentValue = prevValue;
+    }    
+    display.value = currentValue;
+    signOfOperation = ev.target.innerText;
+  }
 }
 
+function decimalPressed() {
+  let localDecimalNumber = display.value;
+  if (isNewValue) {
+    localDecimalNumber = '0.';
+    isNewValue = false;
+    console.log(3);
+  } else {
+    if(localDecimalNumber.indexOf('.') === -1) {
+      localDecimalNumber += '.';
+    }
+  }
+  console.log('localDecimalNumber ' + localDecimalNumber);
+  display.value = localDecimalNumber;
+  display.value.toFixed(2);
+}
 
-document.querySelector('.clear').addEventListener('click', resetPressed);
-
-function resetPressed() {
+function clearPressed() {
   display.value = '';
+  console.log('Натиснуто ' + display.value);
 }
 
-let operationPower = document.querySelector('.operation-power').innerHTML;
-//console.log(operationPower);
-
-/*function powerPressed(ev) {
-  //display.value += ev.target.InnerText;
-  console.log(display.value);
-}*/
-
-document.querySelector('.operation-power').addEventListener('click', powerPressed);
-
-function powerPressed(ev) {
-  display.value = Math.pow(display.value, 2);
-}
-
-function operationToPower() {
-  
-}
-
-document.querySelector('.equal').addEventListener('click', equalPressed);
-
-function equalPressed() {
-  let arr = display.value.split('/');
- 
-  console.log(arr);
-  display.value = eval(display.value);
-  console.log(display.value);
-}
