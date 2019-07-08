@@ -66,7 +66,7 @@ function decimalPressed() {
   }
   console.log('localDecimalNumber ' + localDecimalNumber);
   display.value = localDecimalNumber;
-  (+display.value).toFixed(2);
+  display.value = +display.value.toFixed(7);
 }
 
 function clearPressed() {
